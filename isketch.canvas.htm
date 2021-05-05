@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-            #isketch-canvas {
-                width:800px;
-                height:600px;
-                border:1px solid black;
-            }
-        </style>
+        <link rel="stylesheet" href="isketch.canvas.css">
     </head>
     <body>
-        <canvas width="800" height="600" id="isketch-canvas"></canvas>
+        <div id="isketch-cframe">
+            <div id="isketch-ctools">
+                <span class="tool brush1">
+                    <span class="ico"></span>
+                    <div class="tip">Thin Brush</div>
+                </span>
+                <span class="tool brush2">
+                    <span class="ico"></span>
+                    <div class="tip">Medium Brush</div>
+                </span>
+                <span class="tool brush3">
+                    <span class="ico"></span>
+                    <div class="tip">Thick Brush</div>
+                </span>
+            </div>
+            <canvas width="800" height="600" id="isketch-canvas"></canvas>
+        </div>
     </body>
     <script src="isketch.canvas.js"></script>
 </html>

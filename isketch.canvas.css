@@ -1,0 +1,43 @@
+#isketch-canvas {
+    width:800px;
+    height:600px;
+    touch-action:none;
+}
+#isketch-cframe {
+    width:805px;
+    height:640px;
+    background-color:whitesmoke;
+    padding:5px 0px 0px 5px;
+}
+#isketch-cframe *  {
+    transition: .3s;
+    user-select: none;
+}
+#isketch-ctools {
+    height:30px;
+    width:800px;
+    margin-bottom:5px;
+}
+#isketch-ctools .tool .tip {
+    position: absolute;
+    top:50px;
+    pointer-events: none;
+    background-color:rgba(0,0,0,0.6);
+    backdrop-filter: blur(2px);
+    color:white;
+    padding:5px 10px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 3px rgba(0,0,0,.3);
+    font-size:14px;
+    opacity: 0;
+}
+#isketch-ctools .tool:hover .tip {
+    opacity: 1;
+}
+#isketch-ctools .tool {
+    display: inline-block;
+    width:30px;
+    height:30px;
+    background-color:gray;
+    cursor:pointer;
+}

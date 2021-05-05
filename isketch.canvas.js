@@ -1,24 +1,24 @@
 var is_timer  = document.getElementById("isketch-canvas");
 var ctx       = is_timer.getContext("2d");
 
-var stroke    = "black 3px";
+var stroke    = "black";
 var mousedown = false;
-var drawings  = {
-    lines: [
-        {
-            stroke: "black",
-            points: [
-                {
-                    x: 0,
-                    y: 20
-                }, {
-                    x: 30,
-                    y: 60
-                }, 
-            ]
-        }
-    ]
-};
+var drawings  = [
+    {
+        type: "line",
+        stroke: "black",
+        width: 5,
+        points: [
+            {
+                x: 0,
+                y: 20
+            }, {
+                x: 30,
+                y: 60
+            }, 
+        ]
+    }
+];
 
 ctx.strokeStyle = stroke;
 
@@ -29,28 +29,33 @@ function loop() {
     
 
     
-    drawings.lines.forEach(function(line) {
-        ctx.strokeStyle = line.stroke;
-        ctx.beginPath();
-        ctx.moveTo(line.points[0].x, line.points[0].y);
-        line.points.forEach(function(point) {
-            ctx.lineTo(point.x, point.y);
-        });
-        ctx.stroke();
+    drawings.forEach(function(draw) {
+        if(draw.type == "line") {
+            ctx.strokeStyle = draw.stroke;
+            ctx.lineWidth = draw.width;
+            ctx.beginPath();
+            ctx.moveTo(draw.points[0].x, draw.points[0].y);
+            draw.points.forEach(function(point) {
+                ctx.lineTo(point.x, point.y);
+            });
+            ctx.stroke();
+        }
     });
 
 
     requestAnimationFrame(loop);
 }
 
-is_timer.onmouseup = function() {
+is_timer.onpointerup = function() {
     mousedown = false;
 }
 
-is_timer.onmousedown = function(e) {
+is_timer.onpointerdown = function(e) {
     mousedown = true;
-    drawings.lines.push({
+    drawings.push({
+        type: "line",
         stroke: "black",
+        width: 30,
         points: [
             {
                 x: e.offsetX,
@@ -60,13 +65,17 @@ is_timer.onmousedown = function(e) {
     });
 }
 
-is_timer.onmousemove = function(e) {
+is_timer.onpointermove = function(e) {
     if(mousedown) {
-        drawings.lines[drawings.lines.length - 1].points.push({
+        drawings[drawings.length - 1].points.push({
             x: e.offsetX,
             y: e.offsetY
         });
     }
+}
+
+is_timer.onpointerleave = function() {
+    mousedown = false;
 }
 
 loop();

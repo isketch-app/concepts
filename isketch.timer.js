@@ -14,27 +14,38 @@ var radDiff  = endRad - startRad;
 var timerMS  = 10000;
 var startMS  = 0;
 var isTick   = false;
-var tickingr = 250;
-var ticking  = new Audio("isketch.timer.tick.ogg");
 var ding     = new Audio("isketch.timer.ding.ogg");
 
+var audioCtx = new AudioContext();
+var req      = new Request("isketch.timer.tick.ogg");
+var audioSrc = null;
+var audioBuf = null;
+
+
+fetch(req).then(function(resp) {
+    resp.arrayBuffer().then(function(buffer) {
+        audioCtx.decodeAudioData(buffer, function(decoded) {
+            audioBuf = decoded;
+        });
+    });
+});
+
 ctx.strokeStyle = stroke;
-setInterval(tick, tickingr);
 
 function loop() {
     var timerRatio = ((performance.now() - startMS) / timerMS);
     ctx.fillStyle = "#fff"
     ctx.fillRect(0, 0, is_timer.width, is_timer.height);
     if(timerRatio >= 1) {
-        isTick = false;
+        stopTick();
         ding.play();
         return;
     }
     if(timerRatio >= warnAt) {
-        isTick = true;
+        startTick();
         ctx.fillStyle = colorTM2;
     } else {
-        isTick = false;
+        stopTick();
         ctx.fillStyle = colorTM;
     }
     ctx.beginPath();
@@ -52,8 +63,18 @@ function startTimer() {
     requestAnimationFrame(loop);
 }
 
-function tick() {
-    if(isTick) {
-        ticking.play();
-    }
+function startTick() {
+    if (isTick) return;
+    if (audioSrc != null ) audioSrc.stop(0);
+    isTick = true;
+    audioSrc = audioCtx.createBufferSource();
+    audioSrc.buffer = audioBuf;
+    audioSrc.loop = true;
+    audioSrc.connect(audioCtx.destination);
+    audioSrc.start(0);
+}
+
+function stopTick() {
+    if (audioSrc != null ) audioSrc.stop(0);
+    isTick = false;
 }

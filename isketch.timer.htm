@@ -3,8 +3,29 @@
     <head>
         <style>
             .isketch-timer {
-                width:110px;
-                height:110px;
+                position: absolute;
+                top:20px;
+                left:20px;
+                width:60px;
+                height:60px;
+                border-radius: 30px;
+                background-color:white;
+            }
+            .isketch-timer-frame {
+                position: relative;
+                width:100px;
+                height:100px;
+            }
+            .isketch-timer-frame::after {
+                content:'';
+                display: block;
+                position: absolute;
+                top:0px;
+                left:0px;
+                width:100px;
+                height:100px;
+                background-image:url('isketch.timer.skin.svg');
+                background-size:100% 100%;               
             }
         </style>
         <script type="module">
@@ -14,9 +35,13 @@
         </script>
     </head>
     <body>
-        <canvas width="110" height="110" class="isketch-timer t1"></canvas>
+        <div class="isketch-timer-frame">
+            <canvas width="110" height="110" class="isketch-timer t1"></canvas>
+        </div>
+        <div class="isketch-timer-frame">
+            <canvas width="110" height="110" class="isketch-timer t2"></canvas>
+        </div>
         <button onclick="timer1.startTimer()">Start</button>
-        <canvas width="110" height="110" class="isketch-timer t2"></canvas>
         <button onclick="timer2.startTimer()">Start</button>
     </body>
 </html>

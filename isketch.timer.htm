@@ -2,15 +2,21 @@
 <html>
     <head>
         <style>
-            #isketch-timer {
+            .isketch-timer {
                 width:110px;
                 height:110px;
             }
         </style>
+        <script type="module">
+            import iSketchTimer from "./isketch.timer.js";
+            window.timer1 = new iSketchTimer(".isketch-timer.t1");
+            window.timer2 = new iSketchTimer(".isketch-timer.t2");
+        </script>
     </head>
     <body>
-        <canvas width="110" height="110" id="isketch-timer"></canvas>
-        <button onclick="startTimer()">Start</button>
+        <canvas width="110" height="110" class="isketch-timer t1"></canvas>
+        <button onclick="timer1.startTimer()">Start</button>
+        <canvas width="110" height="110" class="isketch-timer t2"></canvas>
+        <button onclick="timer2.startTimer()">Start</button>
     </body>
-    <script src="isketch.timer.js"></script>
 </html>
